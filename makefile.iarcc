@@ -18,7 +18,7 @@ DEFS       ?=
 DIRS       ?=
 INCS       ?=
 LIBS       ?=
-KEYS       ?=
+KEYS       ?= .cmsis_os .nasa_osal
 OPTF       ?= h # hz
 SCRIPT     ?=
 

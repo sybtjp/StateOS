@@ -18,7 +18,7 @@ DEFS       ?= __MICROLIB
 DIRS       ?=
 INCS       ?=
 LIBS       ?=
-KEYS       ?=
+KEYS       ?= .cmsis_os .nasa_osal
 OPTF       ?= 2 # space
 SCRIPT     ?=
 

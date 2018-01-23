@@ -18,7 +18,7 @@ DEFS       ?= USE_NANO
 DIRS       ?=
 INCS       ?=
 LIBS       ?=
-KEYS       ?=
+KEYS       ?= .cmsis_os .nasa_osal
 OPTF       ?= 2 # s
 SCRIPT     ?=
 
