@@ -141,6 +141,50 @@ unsigned priv_stm_put( stm_t *stm, const char *data, unsigned size )
 }
 
 /* -------------------------------------------------------------------------- */
+unsigned stm_count( stm_t *stm )
+/* -------------------------------------------------------------------------- */
+{
+	tsk_t  * tsk;
+	unsigned cnt;
+
+	assert(stm);
+
+	port_sys_lock();
+
+	cnt = stm->count;
+
+	if (cnt == stm->limit)
+		for (tsk = stm->queue; tsk; tsk = tsk->queue)
+			cnt += tsk->evt.size;
+
+	port_sys_unlock();
+
+	return cnt;
+}
+
+/* -------------------------------------------------------------------------- */
+unsigned stm_space( stm_t *stm )
+/* -------------------------------------------------------------------------- */
+{
+	tsk_t  * tsk;
+	unsigned cnt;
+
+	assert(stm);
+
+	port_sys_lock();
+
+	cnt = stm->limit - stm->count;
+
+	if (cnt == stm->limit)
+		for (tsk = stm->queue; tsk; tsk = tsk->queue)
+			cnt += tsk->evt.size;
+
+	port_sys_unlock();
+
+	return cnt;
+}
+
+/* -------------------------------------------------------------------------- */
 unsigned stm_take( stm_t *stm, void *data, unsigned size )
 /* -------------------------------------------------------------------------- */
 {
@@ -358,50 +402,6 @@ unsigned stm_sendFor( stm_t *stm, const void *data, unsigned size, cnt_t delay )
 /* -------------------------------------------------------------------------- */
 {
 	return priv_stm_send(stm, data, size, delay, core_tsk_waitFor);
-}
-
-/* -------------------------------------------------------------------------- */
-unsigned stm_getBytes( stm_t *stm )
-/* -------------------------------------------------------------------------- */
-{
-	tsk_t  * tsk;
-	unsigned cnt;
-
-	assert(stm);
-
-	port_sys_lock();
-
-	cnt = stm->count;
-
-	if (cnt == stm->limit)
-		for (tsk = stm->queue; tsk; tsk = tsk->queue)
-			cnt += tsk->evt.size;
-
-	port_sys_unlock();
-
-	return cnt;
-}
-
-/* -------------------------------------------------------------------------- */
-unsigned stm_getSpace( stm_t *stm )
-/* -------------------------------------------------------------------------- */
-{
-	tsk_t  * tsk;
-	unsigned cnt;
-
-	assert(stm);
-
-	port_sys_lock();
-
-	cnt = stm->limit - stm->count;
-
-	if (cnt == stm->limit)
-		for (tsk = stm->queue; tsk; tsk = tsk->queue)
-			cnt += tsk->evt.size;
-
-	port_sys_unlock();
-
-	return cnt;
 }
 
 /* -------------------------------------------------------------------------- */
