@@ -2,7 +2,7 @@
 
     @file    StateOS: os_tsk.h
     @author  Rajmund Szymanski
-    @date    22.04.2018
+    @date    01.05.2018
     @brief   This file contains definitions for StateOS.
 
  ******************************************************************************
@@ -75,7 +75,7 @@ struct __tsk
 	const
 	void   * odata; // used by queue objects (output data)
 	void   * idata; // used by queue objects (input data)
-	unsigned msg;   // used by message queue object
+	unsigned event; // used by event queue object
 	fun_t  * fun;   // used by job queue object
 	}        tmp;
 	union  {
