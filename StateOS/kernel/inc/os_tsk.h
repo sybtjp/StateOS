@@ -75,8 +75,8 @@ struct __tsk
 	const
 	void   * odata; // used by queue objects (output data)
 	void   * idata; // used by queue objects (input data)
-	unsigned event; // used by event queue object
 	fun_t  * fun;   // used by job queue object
+	unsigned event; // used by event queue object
 	}        tmp;
 	union  {
 	unsigned flags; // used by flag object: all flags to wait
